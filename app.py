@@ -14,21 +14,46 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["user", "question","qing","honor", "claim"],
     transitions=[
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "dest": "question",
+            "conditions": "is_going_to_question",
         },
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "dest": "question",
+            "conditions": "is_going_to_question",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "question",
+            "dest": "qing",
+            "conditions": "is_going_to_qing",
+        },
+        {
+            "trigger": "advance",
+            "source": "qing",
+            "dest": "qing",
+            "conditions": "is_going_to_qing",
+        },
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "honor",
+            "conditions": "is_going_to_honor",
+        },
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "claim",
+            "conditions": "is_going_to_claim",
+        },
+        {"trigger": "go_back", "source": ["honor", "claim"], "dest": "user"},
+        
     ],
     initial="user",
     auto_transitions=False,
