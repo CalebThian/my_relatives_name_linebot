@@ -44,7 +44,6 @@ machine = TocMachine(
             "fsm"],
     transitions=[
         {"trigger": "advance","source": "user","dest": "question","conditions": "is_going_to_question"},
-        {"trigger": "advance","source": "user","dest": "question","conditions": "is_going_to_question"},
         {"trigger": "advance","source": "user","dest": "fsm","conditions": "is_going_to_fsm"},
         {"trigger": "advance","source": "question","dest": "qing","conditions": "is_going_to_qing"},
         {"trigger": "advance","source": "qing","dest": "qing","conditions": "is_going_to_qing"},
