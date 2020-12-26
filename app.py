@@ -48,7 +48,7 @@ machine = TocMachine(
         {"trigger": "advance","source": "user","dest": "fsm","conditions": "is_going_to_fsm"},
         {"trigger": "advance","source": "question","dest": "qing","conditions": "is_going_to_qing"},
         {"trigger": "advance","source": "qing","dest": "qing","conditions": "is_going_to_qing"},
-        {"trigger": "advance","source": "qing","dest": "qing_list","conditions": "is_going_to_qing_list"},
+        {"trigger": "advance","source": "question","dest": "qing_list","conditions": "is_going_to_qing_list"},
         {"trigger": "advance","source": "user","dest": "honor","conditions": "is_going_to_honor"},
         
         {"trigger": "advance","source": "honor","dest": "honor_e","conditions": "is_going_to_honor_e"},
@@ -126,7 +126,7 @@ machine = TocMachine(
             "honor_ch",
             "honor_ch_list"], "dest": "user","conditions":"is_going_to_user"},
         {"trigger": "go_back", "source": "fsm", "dest": "user"},
-        {"trigger": "go_back", "source": "qing_list", "dest": "qing"},
+        {"trigger": "go_back", "source": "qing_list", "dest": "question"},
         {"trigger": "go_back", "source": "honor_g_list", "dest": "honor_g"},
         {"trigger": "go_back", "source": "honor_panr_list", "dest": "honor_panr"},
         {"trigger": "go_back", "source": "honor_par_list", "dest": "honor_par"},
