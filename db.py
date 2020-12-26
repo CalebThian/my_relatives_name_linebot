@@ -19,6 +19,9 @@ def db_init():
     cursor = conn.cursor()
 
 def create_table():
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
     delete_table_query = '''DROP TABLE IF EXISTS rel_db'''
     cursor.execute(delete_table_query)
     conn.commit()
@@ -31,8 +34,13 @@ def create_table():
                         );'''    
     cursor.execute(create_table_query)
     conn.commit()
+    cursor.close()
+    conn.close()
 
 def insert(user_id,name,rel):
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
     table_columns = '(user_id,name,rel_info)'
     records= (user_id,name,rel)
     postgres_insert_query = f"""INSERT INTO rel_db {table_columns} VALUES (%s,%s,%s);"""
@@ -40,8 +48,13 @@ def insert(user_id,name,rel):
     conn.commit()
     count = cursor.rowcount
     print(count,"Record inserted successfully into rel_db")
+    cursor.close()
+    conn.close()
 
 def select(user_id,col_use,key):
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
     info = "查詢到的資料包含："
     if col_use == "名字":
         postgres_select_query = f"""SELECT * FROM rel_db WHERE user_id=%s,name=%s"""
@@ -55,9 +68,14 @@ def select(user_id,col_use,key):
     d = cursor.fetchall()
     for p in d:
         info = info+"\n"+p[2]+":"+p[3]
+    cursor.close()
+    conn.close()
     return info
 
 def update(user_id,col_use,key,up_col,upkey):
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
     if col_use == "名字":
         if up_col == "名字":
             postgres_select_query = f"""UPDATE rel_db SET name = %s WHERE user_id=%s,name=%s"""
@@ -73,9 +91,14 @@ def update(user_id,col_use,key,up_col,upkey):
     conn.commit()
 
     count = cursor.rowcount
+    cursor.close()
+    conn.close()
     return (str(count)+"筆資料成功更新")
 
 def delete(user_id,col_use,key):
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
     if col_use == "名字":
         postgres_delect_query = f"""DELETE * FROM rel_db WHERE user_id=%s,name=%s"""
         cursor.execute(postgres_delect_query,(user_id,key,))
@@ -85,6 +108,8 @@ def delete(user_id,col_use,key):
     elif col_use == "全部":
         postgres_delect_query = f"""DELETE * FROM rel_db"""
         cursor.execute(postgres_delect_query)
+    cursor.close()
+    conn.close()
 
 def db_exit():
     cursor.close()
