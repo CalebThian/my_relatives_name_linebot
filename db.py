@@ -10,7 +10,7 @@ import psycopg2
 
 conn = ''
 cursor = ''
-def log_mes():
+def log_message():
     return "輸入“存入”開始存入親戚資訊\n輸入“查詢”開始查詢親戚資訊\n輸入“更新”以更新親戚資訊\n輸入“刪除”以刪除親戚資訊"
 
 def db_init():
