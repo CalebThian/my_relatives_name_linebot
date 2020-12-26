@@ -653,6 +653,8 @@ honor = {
     "子女":child_honor
 }
 
+list_rel=["父親","母親","哥哥","弟弟","姊姊","妹妹","男兒","女兒","丈夫","妻子"]
+
 def relative_name(str):
     if str[0:2]=="父親":
         if father.get(str[3:],"未知")!="未知":
@@ -734,5 +736,11 @@ def name_info(d):
 def key_info(d,str):
     info = "未知,對於\""+str[0:2]+"的”可提供:"
     for k in d.keys():
+        info = info +"\n\t"+ k
+    return info
+
+def list_info():
+    info = "可供查詢的一等親包含："
+    for k in list_rel:
         info = info +"\n\t"+ k
     return info

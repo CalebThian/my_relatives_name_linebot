@@ -2,7 +2,7 @@ from transitions.extensions import GraphMachine
 
 from utils import send_text_message,send_button_message,send_image_message
 
-from relative import relative_name,honor_list_exist,honor_list_info,honor_info
+from relative import relative_name,honor_list_exist,honor_list_info,honor_info,list_info
 
 from linebot.models import MessageTemplateAction
 
@@ -38,7 +38,7 @@ class TocMachine(GraphMachine):
         print("I'm entering question")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "請問你想問誰的誰呢？（例如：爸爸的媽媽、姐姐的丈夫的妹妹等)")
+        send_text_message(reply_token, "請問你想問誰(限一等親内)的誰呢？（例如：父親的母親、妻子的哥哥等)\n若不清楚有哪些一等親，請輸入“一等親”來查詢！")
         
     def is_going_to_qing(self, event):
         text = event.message.text
@@ -50,6 +50,15 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         send_text_message(reply_token, relative_name(event.message.text))
         #self.go_back()
+        
+    def is_going_to_qing_list(self, event):
+        text = event.message.text
+        return text=="一等親"
+    
+    def on_enter_qing_list(self, event):
+        reply_token = event.reply_token
+        send_text_message(reply_token,list_info)
+        self.go_back()
     
     def is_going_to_honor(self, event):
         text = event.message.text
