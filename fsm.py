@@ -26,7 +26,7 @@ class TocMachine(GraphMachine):
     
     def on_enter_fsm(self,event):
         reply_token = event.reply_token
-        url = "https://i.imgur.com/BfeBkRx.jpg"
+        url = "https://i.imgur.com/TOmseXT.jpg"
         send_image_message(reply_token, url)
         self.go_back()
     

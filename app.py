@@ -98,7 +98,6 @@ machine = TocMachine(
         {"trigger": "advance","source": "honor_ch","dest": "honor_ch_list","conditions": "is_going_to_honor_ch_list"},
         {"trigger": "advance","source": "honor_ch","dest": "honor","conditions": "is_going_back_to_honor"},
         
-        {"trigger": "advance","source": "user","dest": "claim","conditions": "is_going_to_claim"},
         {"trigger": "advance", "source": ["user",
             "question",
             "qing",
