@@ -57,7 +57,7 @@ class TocMachine(GraphMachine):
     
     def on_enter_qing_list(self, event):
         reply_token = event.reply_token
-        send_text_message(reply_token,list_info)
+        send_text_message(reply_token,list_info())
         self.go_back()
     
     def is_going_to_honor(self, event):
