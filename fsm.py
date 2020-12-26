@@ -42,6 +42,8 @@ class TocMachine(GraphMachine):
         
     def is_going_to_qing(self, event):
         text = event.message.text
+        if len(text)<2:
+            return False
         return text[2]=="的"
     
     def on_enter_qing(self, event):
