@@ -26,7 +26,7 @@ class TocMachine(GraphMachine):
     
     def on_enter_fsm(self,event):
         reply_token = event.reply_token
-        url = "https://e3fc8d90a333.ngrok.io/show-img"
+        url = "https://who-you-are.heroku/show-img"
         send_image_message(reply_token, url)
         self.go_back()
     
