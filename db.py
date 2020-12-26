@@ -14,7 +14,7 @@ def log_mes():
     return "輸入“存入”開始存入親戚資訊\n輸入“查詢”開始查詢親戚資訊\n輸入“更新”以更新親戚資訊\n輸入“刪除”以刪除親戚資訊"
 
 def db_init():
-    DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
+    DATABASE_URL = os.environ['DATABASE_URL']
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
 
