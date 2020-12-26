@@ -88,7 +88,6 @@ python3 app.py
 ![](https://i.imgur.com/bEC1Uz2.png)
 
 ### FSM
-![](https://i.imgur.com/kk8b9aa.jpg)
 ![](https://i.imgur.com/T8D6y5G.png)
 
 ## FSM
