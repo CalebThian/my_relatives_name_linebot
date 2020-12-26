@@ -9,6 +9,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
+from db import create_table
 import pygraphviz
 
 load_dotenv()
@@ -41,7 +42,18 @@ machine = TocMachine(
             "honor_mcr_list",
             "honor_ch",
             "honor_ch_list",
-            "fsm"],
+            "fsm",
+            "log",
+            "log_name",
+            "log_rel_info",
+            "log_select",
+            "log_sel",
+            "log_update",
+            "log_upd",
+            "log_upd_col",
+            "log_upd_key",
+            "log_delete",
+            "log_del"],
     transitions=[
         {"trigger": "advance","source": "user","dest": "question","conditions": "is_going_to_question"},
         {"trigger": "advance","source": "user","dest": "fsm","conditions": "is_going_to_fsm"},
@@ -49,6 +61,7 @@ machine = TocMachine(
         {"trigger": "advance","source": "qing","dest": "qing","conditions": "is_going_to_qing"},
         {"trigger": "advance","source": "question","dest": "qing_list","conditions": "is_going_to_qing_list"},
         {"trigger": "advance","source": "user","dest": "honor","conditions": "is_going_to_honor"},
+        
         
         {"trigger": "advance","source": "honor","dest": "honor_e","conditions": "is_going_to_honor_e"},
         {"trigger": "advance","source": "honor","dest": "honor_pp","conditions": "is_going_to_honor_pp"},
@@ -98,6 +111,30 @@ machine = TocMachine(
         {"trigger": "advance","source": "honor_ch","dest": "honor_ch_list","conditions": "is_going_to_honor_ch_list"},
         {"trigger": "advance","source": "honor_ch","dest": "honor","conditions": "is_going_back_to_honor"},
         
+        {"trigger": "advance","source": "user","dest": "log","conditions": "is_going_to_log"},
+        {"trigger": "advance","source": "log","dest": "log_name","conditions": "is_going_to_log_name"},
+        {"trigger": "advance","source": "log_name","dest": "log_rel_info","conditions": "is_going_to_log_rel_info"},
+        {"trigger": "advance","source": "log_rel_info","dest": "log","conditions": "is_going_back_to_log"},
+        
+        {"trigger": "advance","source": "log","dest": "log_select","conditions": "is_going_to_log_select"},
+        {"trigger": "advance","source": "log_select","dest": "log_sel","conditions": "is_going_to_log_sel"},
+        {"trigger": "go_back","source": "log_sel","dest": "log","conditions": "is_going_back_to_log"},
+        
+        {"trigger": "advance","source": "log","dest": "log_select","conditions": "is_going_to_log_select"},
+        {"trigger": "advance","source": "log_select","dest": "log_sel","conditions": "is_going_to_log_sel"},
+        {"trigger": "go_back","source": "log_sel","dest": "log","conditions": "is_going_back_to_log"},
+        {"trigger": "advance","source": "log_select","dest": "log","conditions": "is_going_to_log_sel_all"},
+        
+        {"trigger": "advance","source": "log","dest": "log_update","conditions": "is_going_to_log_update"},
+        {"trigger": "advance","source": "log_update","dest": "log_upd","conditions": "is_going_to_log_sel"},
+        {"trigger": "advance","source": "log_upd","dest": "log_upd_col","conditions": "is_going_to_log_upd_col"},
+        {"trigger": "advance","source": "log_upd_col","dest": "log_upd_key","conditions": "is_going_to_log_upd_key"},
+        {"trigger": "go_back","source": "log_upd_key","dest": "log","conditions": "is_going_back_to_log"},
+        
+        {"trigger": "advance","source": "log","dest": "log_delete","conditions": "is_going_to_log_delete"},
+        {"trigger": "advance","source": "log_delete","dest": "log_del","conditions": "is_going_to_log_del"},
+        {"trigger": "go_back","source": "log_del","dest": "log","conditions": "is_going_to_log_del_all"},
+        
         {"trigger": "advance", "source": ["user",
             "question",
             "qing",
@@ -124,7 +161,18 @@ machine = TocMachine(
             "honor_mcr_list",
             "honor_ch",
             "honor_ch_list",
-            "fsm"], "dest": "user","conditions":"is_going_to_user"},
+            "fsm",
+            "log",
+            "log_name",
+            "log_rel_info",
+            "log_select",
+            "log_sel",
+            "log_update",
+            "log_upd",
+            "log_upd_col",
+            "log_upd_key",
+            "log_delete",
+            "log_del"], "dest": "user","conditions":"is_going_to_user"},
         {"trigger": "go_back", "source": "fsm", "dest": "user"},
         {"trigger": "go_back", "source": "qing_list", "dest": "question"},
         {"trigger": "go_back", "source": "honor_g_list", "dest": "honor_g"},
@@ -211,7 +259,7 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
-            send_text_message(event.reply_token, "Not Entering any State")
+            send_text_message(event.reply_token, "抱歉，請按正確格式重新輸入...")
 
     return "OK"
 
@@ -224,4 +272,5 @@ def show_fsm():
 
 if __name__ == "__main__":
     port = os.environ.get("PORT", 8000)
+    create_table()
     app.run(host="0.0.0.0", port=port, debug=True)

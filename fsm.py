@@ -4,7 +4,15 @@ from utils import send_text_message,send_button_message,send_image_message
 
 from relative import relative_name,honor_list_exist,honor_list_info,honor_info,list_info
 
+from db import *
+
 from linebot.models import MessageTemplateAction
+
+col_use = ""
+key=""
+upcol=""
+upkey=""
+information = ""
 
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
@@ -18,7 +26,7 @@ class TocMachine(GraphMachine):
         if event == 0:
             return
         reply_token = event.reply_token
-        send_text_message(reply_token, "輸入“請告訴我”來確認如何稱呼親戚！\n輸入“尊稱”來瞭解尊稱！\n隨時輸入“結束”來重新開始！")
+        send_text_message(reply_token, "輸入“請告訴我”來確認如何稱呼親戚！\n輸入“尊稱”來瞭解尊稱！\n輸入“登記”來記錄親戚的名字與稱呼!\n隨時輸入“結束”來重新開始！")
         
     def is_going_to_fsm(self,event):
         text = event.message.text
@@ -29,6 +37,122 @@ class TocMachine(GraphMachine):
         url = "https://i.imgur.com/TOmseXT.jpg"
         send_image_message(reply_token, url)
         self.go_back()
+        
+    def is_going_to_log(self,event):
+        text = event.message.text
+        return text.lower() == "登記"
+    
+    def on_enter_log(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, information+log_message())
+        
+    def is_going_to_log_name(self,event):
+        text = event.message.text
+        return text.lower() == "存入"
+    
+    def on_enter_log_name(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請輸入親戚姓名：")
+        
+    def is_going_to_log_rel_info(self,event):
+        name = event.message.text
+        return len(name)<=50
+    
+    def on_enter_log_rel_info(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請輸入親戚稱呼：")
+    
+    def is_going_back_to_log(self,event):
+        rel = event.message.text       
+        return len(rel)<=50
+    
+    def is_going_to_log_select(self,event):
+        text = event.message.text
+        return text.lower() == "查詢"
+    
+    def on_enter_log_select(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請問您是要按照親戚名字或稱呼來查詢？請輸入“名字”或“稱呼。\n若是想查看全部資料請輸入“全部”")
+        
+    def is_going_to_log_sel(self,event):
+        col_use = event.message.text
+        return col_use=="名字" or col_use == "稱呼"
+    
+    def on_enter_log_sel(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請輸入欲查詢的名字/稱呼：")
+    
+    def on_exit_log_sel(self,event):
+        text = event.message.text
+        information = select(event.source.user_id,col_use,text)+"\n"
+    
+    def is_going_to_log_sel_all(self,event):
+        text = event.message.text
+        if text.lower()=="全部":
+            information = select(event.source.user_id,"全部","")+"\n"
+        return text.lower()=="全部"
+    
+    def is_going_to_log_update(self,event):
+        text = event.message.text
+        return text.lower() == "更新"
+    
+    def on_enter_log_update(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請問您是要按照親戚名字或稱呼來更新？請輸入“名字”或“稱呼。")
+    
+    def is_going_to_log_upd(self,event):
+        col_use = event.message.text
+        return col_use=="名字" or col_use == "稱呼"
+    
+    def on_enter_log_upd(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請輸入欲更新資料的名字/稱呼：")
+        
+    def is_going_to_log_upd_col(self,event):
+        key = event.message.text
+        return len(col_use)<=50
+    
+    def on_enter_log_upd_col(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請問您是要更新選定資料的名字或稱呼？請輸入“名字”或“稱呼。")
+    
+    def is_going_to_log_upd_key(self,event):
+        upcol = event.message.text
+        return upcol=="名字" or upcol == "稱呼"
+    
+    def on_enter_log_upd_key(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請輸入更新的内容：")
+    
+    def on_exit_log_upd_key(self,event):
+        upkey = event.message.text
+        information = update(event.source.user_id,col_use,key,upcol,upkey)+"\n"    
+    
+    def is_going_to_log_delete(self,event):
+        text = event.message.text
+        return text.lower() == "刪除"
+    
+    def on_enter_log_delete(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請問您是要按照親戚名字或稱呼來刪除？請輸入“名字”或“稱呼。\n若是想刪除全部資料請輸入“全部”")
+        
+    def is_going_to_log_del(self,event):
+        col_use = event.message.text
+        return col_use=="名字" or col_use == "稱呼"
+    
+    def on_enter_log_del(self,event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請輸入欲刪除的名字/稱呼：")
+    
+    def on_exit_log_del(self,event):
+        text = event.message.text
+        information = delect(event.source.user_id,col_use,text)+"\n"
+    
+    def is_going_to_log_del_all(self,event):
+        text = event.message.text
+        if text.lower()=="全部":
+            information = delect(event.source.user_id,"全部","")+"\n"
+        return text.lower()=="全部"
     
     def is_going_to_question(self, event):
         text = event.message.text
