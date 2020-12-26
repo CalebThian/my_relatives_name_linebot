@@ -26,7 +26,7 @@ class TocMachine(GraphMachine):
     
     def on_enter_fsm(self,event):
         reply_token = event.reply_token
-        url = "https://who-you-are.heroku/show-img"
+        url = "https://i.imgur.com/BfeBkRx.jpg"
         send_image_message(reply_token, url)
         self.go_back()
     
