@@ -14,7 +14,9 @@ class TocMachine(GraphMachine):
         text = event.message.text
         return text.lower() == "結束"
     
-    def on_enter_user(self,event):
+    def on_enter_user(self,event=0):
+        if event == 0:
+            return
         reply_token = event.reply_token
         send_text_message(reply_token, "輸入“請告訴我”來確認如何稱呼親戚！\n輸入“尊稱”來瞭解尊稱！\n隨時輸入“結束”來重新開始！")
         
@@ -24,9 +26,9 @@ class TocMachine(GraphMachine):
     
     def on_enter_fsm(self,event):
         reply_token = event.reply_token
-        url = "https://www.itsfun.com.tw/cacheimg/ba/65/3a17c88fae81cf6dc7e4c7d6f8df.jpg"
+        url = "https://e3fc8d90a333.ngrok.io/show-img"
         send_image_message(reply_token, url)
-        self.go_back(event)
+        self.go_back()
     
     def is_going_to_question(self, event):
         text = event.message.text
