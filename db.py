@@ -48,8 +48,10 @@ def insert(user_id,name,rel):
     conn.commit()
     count = cursor.rowcount
     print(count,"Record inserted successfully into rel_db")
+    
     cursor.close()
     conn.close()
+    return(str(count)+" 成功登入:("+name+","+rel+")")
 
 def select(user_id,col_use,key):
     DATABASE_URL = os.environ['DATABASE_URL']

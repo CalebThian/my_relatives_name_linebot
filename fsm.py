@@ -83,13 +83,15 @@ class TocMachine(GraphMachine):
         send_text_message(reply_token, "請輸入欲查詢的名字/稱呼：")
     
     def on_exit_log_sel(self,event):
-        text = event.message.text
+        text = event.message.text       
         information = select(event.source.user_id,col_use,text)+"\n"
-    
+        print(information)
+        
     def is_going_to_log_sel_all(self,event):
         text = event.message.text
         if text.lower()=="全部":
             information = select(event.source.user_id,"全部","")+"\n"
+        print(information)
         return text.lower()=="全部"
     
     def is_going_to_log_update(self,event):
