@@ -272,7 +272,7 @@ class TocMachine(GraphMachine):
                 text = '晚輩'
             )
         ]
-        url = 'https://www.itsfun.com.tw/cacheimg/ba/65/3a17c88fae81cf6dc7e4c7d6f8df.jpg'
+        url = 'https://i.imgur.com/sWrKlEi.png'
         send_button_message(reply_token, title, text, btn, url)
         
     def is_going_to_honor_e(self, event):
@@ -297,7 +297,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://png.pngtree.com/png-clipart/20190612/original/pngtree-honor-elders-old-man-png-image_3269762.jpg'
+        url = 'https://i.imgur.com/WnfsDGT.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_back_to_honor_e(self, event):
@@ -322,7 +322,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://thumbs.dreamstime.com/b/%E6%8F%A1%E6%89%8B%E7%9A%84%E6%84%89%E5%BF%AB%E7%9A%84%E8%80%81%E5%A4%AB%E5%A6%87%EF%BC%8C%E5%AF%BC%E8%88%AA%E5%B9%B3%E7%9A%84%E5%8A%A8-%E7%89%87%E8%A2%AB%E9%9A%94-%E7%9A%84%E5%AD%97%E7%AC%A6%E4%BE%8B%E8%AF%81-81206643.jpg'
+        url = 'https://i.imgur.com/oqoQymD.png'
         send_button_message(reply_token, title, text, btn, url)
         
     def is_going_to_honor_g_list(self, event):
@@ -360,7 +360,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://cdn2.ettoday.net/images/1409/1409204.jpg'
+        url = 'https://i.imgur.com/fGgL4T5.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_back_to_honor_pa(self, event):
@@ -385,7 +385,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://pic.pimg.tw/kabuki11/1382103298-1960100962.jpg'
+        url = 'https://i.imgur.com/Pv0uC91.png'
         send_button_message(reply_token, title, text, btn, url)
         
     def is_going_to_honor_panr_list(self, event):
@@ -457,7 +457,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://lh3.googleusercontent.com/proxy/XsxTkJTtB_y3AbjCUwgZsvyBEPCrvajjE_bhnlrHCbzDMm6V2k4UEkT-cPiFV4ks_0fg0W1fwPfcSmAriMAhzWVUxsyPqNw-dN4tmSUi3Bx_'
+        url = 'https://i.imgur.com/sdGS24A.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_back_to_honor_pp(self, event):
@@ -486,7 +486,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZjlrSgME9RM89YzhRjSATaigznh4b6pnmg&usqp=CAU'
+        url = 'https://i.imgur.com/nbXrIPO.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_back_to_honor_s(self, event):
@@ -511,7 +511,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://lh3.googleusercontent.com/proxy/xBBEzV8RW_NDTRti0_ZY5ZdSc-vvznRROThEgkBECFWjXCZJ_SPpO_YiD-i_c5gAJy8DMZJX5B70qxxnWGb7kmtWVYP1kS8pzCpQ2rYvIE94Y4b87Ovs8lw'
+        url = 'https://i.imgur.com/rv6HoYj.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_to_honor_bro_list(self, event):
@@ -545,7 +545,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://ae01.alicdn.com/kf/H60b6c7ea93754603903624669d650e10p.jpg'
+        url = 'https://i.imgur.com/NIN7eZh.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_to_honor_sis_list(self, event):
@@ -583,7 +583,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://img.lovepik.com/original_origin_pic/18/06/19/eae6d6c2177df68962458628b8344741.png_wh860.png'
+        url = 'https://i.imgur.com/sbpMlTF.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_back_to_honor_mc(self, event):
@@ -608,7 +608,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://img.lovepik.com/element/40125/0283.png_860.png'
+        url = 'https://i.imgur.com/ZxxAT9t.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_to_honor_mcnr_list(self, event):
@@ -642,7 +642,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://inews.gtimg.com/newsapp_bt/0/7641658382/640'
+        url = 'https://i.imgur.com/UVzUJga.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_to_honor_mcr_list(self, event):
@@ -676,7 +676,7 @@ class TocMachine(GraphMachine):
                 text = '回上一層'
             )
         ]
-        url = 'https://lh3.googleusercontent.com/proxy/zP0e4Hg-5QII099crO-GIgrswGhgKTCx0g4br-yHfLkPZB7B8JAqlIJmJnpvAtJ7EwZiiv3Ftk4j4ux2YDnyscwvmJyVikuK70JJv1QEiljrVHpZS_RaYHA'
+        url = 'https://i.imgur.com/TlJ34JH.png'
         send_button_message(reply_token, title, text, btn, url)
     
     def is_going_to_honor_ch_list(self, event):
