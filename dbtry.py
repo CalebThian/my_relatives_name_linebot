@@ -47,13 +47,19 @@ cursor.execute(postgres_select_query)
 a = cursor.fetchall()
 print(a)
 
-rel = '哥哥'
+rel = '母親'
 postgres_update_query = f"""UPDATE rel_db SET rel_info = '哥哥' WHERE rel_info = %s"""
 cursor.execute(postgres_update_query,(rel,))
 conn.commit()
 
 count = cursor.rowcount
 print(count, "Record updated successfully into rel_db")
+
+postgres_select_query = f"""SELECT * FROM rel_db"""
+cursor.execute(postgres_select_query)
+a = cursor.fetchall()
+print(a)
+
 
 cursor.close()
 conn.close()

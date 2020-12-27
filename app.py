@@ -11,6 +11,7 @@ from fsm import TocMachine
 from utils import send_text_message
 from db import db_init,create_table
 import pygraphviz
+import psycopg2
 
 load_dotenv()
 
@@ -45,15 +46,20 @@ machine = TocMachine(
             "fsm",
             "log",
             "log_name",
-            "log_rel_info",
+            "log_ins_pro",
             "log_select",
             "log_sel",
+            "log_sel_pro",
+            "log_sel_all_pro",
             "log_update",
             "log_upd",
             "log_upd_col",
             "log_upd_key",
+            "log_upd_pro",
             "log_delete",
-            "log_del"],
+            "log_del",
+            "log_del_pro",
+            "log_del_all_pro"],
     transitions=[
         {"trigger": "advance","source": "user","dest": "question","conditions": "is_going_to_question"},
         {"trigger": "advance","source": "user","dest": "fsm","conditions": "is_going_to_fsm"},
@@ -113,27 +119,25 @@ machine = TocMachine(
         
         {"trigger": "advance","source": "user","dest": "log","conditions": "is_going_to_log"},
         {"trigger": "advance","source": "log","dest": "log_name","conditions": "is_going_to_log_name"},
-        {"trigger": "advance","source": "log_name","dest": "log_rel_info","conditions": "is_going_to_log_rel_info"},
-        {"trigger": "advance","source": "log_rel_info","dest": "log","conditions": "is_going_back_to_log"},
+        {"trigger": "advance","source": "log_name","dest": "log_ins_pro","conditions": "is_going_to_log_ins_pro"},
         
         {"trigger": "advance","source": "log","dest": "log_select","conditions": "is_going_to_log_select"},
         {"trigger": "advance","source": "log_select","dest": "log_sel","conditions": "is_going_to_log_sel"},
-        {"trigger": "go_back","source": "log_sel","dest": "log","conditions": "is_going_back_to_log"},
-        
-        {"trigger": "advance","source": "log","dest": "log_select","conditions": "is_going_to_log_select"},
-        {"trigger": "advance","source": "log_select","dest": "log_sel","conditions": "is_going_to_log_sel"},
-        {"trigger": "go_back","source": "log_sel","dest": "log","conditions": "is_going_back_to_log"},
-        {"trigger": "advance","source": "log_select","dest": "log","conditions": "is_going_to_log_sel_all"},
+        {"trigger": "advance","source": "log_sel","dest": "log_sel_pro","conditions": "is_going_to_log_sel_pro"},
+        {"trigger": "advance","source": "log_select","dest": "log_sel_all_pro","conditions": "is_going_to_log_sel_all_pro"},
         
         {"trigger": "advance","source": "log","dest": "log_update","conditions": "is_going_to_log_update"},
         {"trigger": "advance","source": "log_update","dest": "log_upd","conditions": "is_going_to_log_sel"},
         {"trigger": "advance","source": "log_upd","dest": "log_upd_col","conditions": "is_going_to_log_upd_col"},
         {"trigger": "advance","source": "log_upd_col","dest": "log_upd_key","conditions": "is_going_to_log_upd_key"},
-        {"trigger": "go_back","source": "log_upd_key","dest": "log","conditions": "is_going_back_to_log"},
+        {"trigger": "advance","source": "log_upd_key","dest": "log_upd_pro","conditions": "is_going_to_log_upd_pro"},
         
         {"trigger": "advance","source": "log","dest": "log_delete","conditions": "is_going_to_log_delete"},
         {"trigger": "advance","source": "log_delete","dest": "log_del","conditions": "is_going_to_log_del"},
-        {"trigger": "go_back","source": "log_del","dest": "log","conditions": "is_going_to_log_del_all"},
+        {"trigger": "advance","source": "log_del","dest": "log_del_pro","conditions": "is_going_to_log_del_pro"},
+        {"trigger": "advance","source": "log_delete","dest": "log_del_all_pro","conditions": "is_going_to_log_del_all_pro"},
+        
+        {"trigger": "go_back","source": ["log_ins_pro","log_sel_pro","log_sel_all_pro","log_upd_pro","log_del_pro","log_del_all_pro"],"dest": "log"},
         
         {"trigger": "advance", "source": ["user",
             "question",
@@ -164,15 +168,19 @@ machine = TocMachine(
             "fsm",
             "log",
             "log_name",
-            "log_rel_info",
+            "log_ins_pro",
             "log_select",
             "log_sel",
+            "log_sel_pro",
+            "log_sel_all_pro",
             "log_update",
             "log_upd",
             "log_upd_col",
             "log_upd_key",
+            "log_upd_pro",
             "log_delete",
-            "log_del"], "dest": "user","conditions":"is_going_to_user"},
+            "log_del",
+            "log_del_pro"], "dest": "user","conditions":"is_going_to_user"},
         {"trigger": "go_back", "source": "fsm", "dest": "user"},
         {"trigger": "go_back", "source": "qing_list", "dest": "question"},
         {"trigger": "go_back", "source": "honor_g_list", "dest": "honor_g"},
@@ -271,6 +279,12 @@ def show_fsm():
 
 
 if __name__ == "__main__":
+    # DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
+    # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    # cursor = conn.cursor()
+    # delete_table_query = '''DROP TABLE IF EXISTS rel_db'''
+    # cursor.execute(delete_table_query)
+    # conn.commit()
     #machine.get_graph().draw("fsm.png", prog="dot", format="png")
     port = os.environ.get("PORT", 8000)
     create_table()

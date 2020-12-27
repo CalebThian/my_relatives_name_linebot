@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 """
+Created on Sun Dec 27 14:17:46 2020
+
+@author: caleb
+"""
+
+
+# -*- coding: utf-8 -*-
+"""
 Created on Sun Dec 27 00:08:52 2020
 
 @author: caleb
@@ -14,12 +22,12 @@ def log_message():
     return "輸入“存入”開始存入親戚資訊\n輸入“查詢”開始查詢親戚資訊\n輸入“更新”以更新親戚資訊\n輸入“刪除”以刪除親戚資訊"
 
 def db_init():
-    DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
 
 def create_table():
-    DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
     delete_table_query = '''DROP TABLE IF EXISTS rel_db'''
@@ -38,7 +46,7 @@ def create_table():
     conn.close()
 
 def insert(user_id,name,rel):
-    DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
     table_columns = '(user_id,name,rel_info)'
@@ -54,7 +62,7 @@ def insert(user_id,name,rel):
     return(str(count)+" 成功登入:("+name+","+rel+")")
 
 def select(user_id,col_use,key):
-    DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
     info = "查詢到的資料包含："
@@ -82,7 +90,7 @@ def select(user_id,col_use,key):
     return info
 
 def update(user_id,col_use,key,up_col,upkey):
-    DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
     if col_use == "名字":
@@ -104,7 +112,7 @@ def update(user_id,col_use,key,up_col,upkey):
     return (str(count)+"筆資料成功更新")
 
 def delete(user_id,col_use,key):
-    DATABASE_URL = os.environ['DATABASE_URL']
+    DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     cursor = conn.cursor()
     if col_use == "名字":
