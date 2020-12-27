@@ -28,7 +28,7 @@ class TocMachine(GraphMachine):
         if event == 0:
             return
         reply_token = event.reply_token
-        send_text_message(reply_token, "輸入“請告訴我”來確認如何稱呼親戚！\n輸入“尊稱”來瞭解尊稱！\n輸入“登記”來記錄親戚的名字與稱呼!\n隨時輸入“結束”來重新開始！")
+        send_text_message(reply_token, "輸入“請告訴我”來確認如何稱呼親戚！\n輸入“尊稱”來瞭解尊稱！\n輸入“登記”來記錄親戚的名字與稱呼!\n輸入`fsm`來查看狀態圖！!\n隨時輸入“結束”來重新開始！")
         
     def is_going_to_fsm(self,event):
         text = event.message.text
