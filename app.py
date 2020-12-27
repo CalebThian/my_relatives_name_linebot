@@ -9,7 +9,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
-from db import db_init,create_table
+from dblocal import db_init,create_table
 import pygraphviz
 import psycopg2
 
@@ -279,13 +279,13 @@ def show_fsm():
 
 
 if __name__ == "__main__":
+    # Delete the Database exists
     # DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a who-you-are').read()[:-1]
     # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     # cursor = conn.cursor()
     # delete_table_query = '''DROP TABLE IF EXISTS rel_db'''
     # cursor.execute(delete_table_query)
     # conn.commit()
-    #machine.get_graph().draw("fsm.png", prog="dot", format="png")
     port = os.environ.get("PORT", 8000)
     create_table()
     app.run(host="0.0.0.0", port=port, debug=True)

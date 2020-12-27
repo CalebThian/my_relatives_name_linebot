@@ -4,7 +4,7 @@ from utils import send_text_message,send_button_message,send_image_message
 
 from relative import relative_name,honor_list_exist,honor_list_info,honor_info,list_info
 
-from db import *
+from dblocal import *
 
 from linebot.models import MessageTemplateAction
 
@@ -36,7 +36,7 @@ class TocMachine(GraphMachine):
     
     def on_enter_fsm(self,event):
         reply_token = event.reply_token
-        url = "https://i.imgur.com/TOmseXT.jpg"
+        url = "https://i.imgur.com/1zgGqaR.jpg"
         send_image_message(reply_token, url)
         self.go_back()
         
