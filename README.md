@@ -4,11 +4,15 @@
 越來越接近新年了，各樣的親戚都有各自的稱謂，是否很怕叫做稱呼，不知道該如何稱呼眼前的親戚？使用此line bot 以便利的方式瞭解親戚的稱呼
 
 ## 構想
-主要提供兩樣功能，第一是按照一等親以内（包括父親、母親、哥哥、弟弟、姊姊、妹妹、男兒（即兒子）、女兒、丈夫、妻子）的親戚關係，以問答的方式給與該親戚的稱呼、自稱等資訊，二是以查詢的方式，科普該分類下的稱呼。
+主要提供三樣功能，第一是按照一等親以内（包括父親、母親、哥哥、弟弟、姊姊、妹妹、男兒（即兒子）、女兒、丈夫、妻子）的親戚關係，以問答的方式給與該親戚的稱呼、自稱等資訊，二是以查詢的方式，科普該分類下的稱呼。第三則是建立資料庫，記錄親戚的名字和稱呼。
 
 ## 環境
 - Windows 10
 - python 3.7.6
+
+# 技術
+- postgresql
+    - Heroku-Postgres: 數據庫
 
 ## 使用教學
 1. install `pipenv`
@@ -71,8 +75,21 @@ python3 app.py
         - `晚輩`（即子女）
     
     b. 到了最終分類後，點選或輸入`列表`會列出可查詢的親戚稱呼，輸入正確的話會回復該稱呼的科普
+    
     c. 隨時輸入`回上一層`以回到上一層狀態
 
+    3. 輸入`登記`開始記錄親戚的名字與稱呼
+        
+        a. 輸入後可以輸入四種指令
+        
+        - `存入`：以“<名字><空格><稱呼>”的格式記錄親戚的資訊     
+        - `查詢`：提供三種查詢方式，提供該方式所需要的資訊以查詢資料庫裏的親戚資訊
+            
+            - `名字` 
+            - `稱呼`
+            - `全部`
+        - `更新`：提供兩種查詢方式（即名字或稱呼），符合要求的親戚資料可以更改其名字或稱呼
+        - `刪除`：提供兩種查詢方式（即名字或稱呼），符合要求的親戚資料可以刪除其名字或稱呼，又或者直接輸入`全部`以刪除所有資料也是可以的        
 
 ## 使用示範
 ### `請告訴我`
@@ -86,12 +103,21 @@ python3 app.py
 ![](https://i.imgur.com/0fCwe4V.png)
 ![](https://i.imgur.com/6mVHgXG.png)
 ![](https://i.imgur.com/bEC1Uz2.png)
+### 登記
+![](https://i.imgur.com/pS6uWLH.png)
+![](https://i.imgur.com/rH6p1Ob.png)
+![](https://i.imgur.com/7ttFFWR.png)
+![](https://i.imgur.com/n9wTMwp.png)
+![](https://i.imgur.com/RKdil3L.png)
 
 ### FSM
 ![](https://i.imgur.com/T8D6y5G.png)
 
 ## FSM
-![](https://i.imgur.com/TOmseXT.jpg)
+![](https://i.imgur.com/1zgGqaR.jpg)
+
+
+
 
 ### state說明
 - user: 輸入`請告訴我`使用詢問功能；`尊稱`使用查詢功能；`fsm`回復fsm的圖檔
@@ -121,6 +147,22 @@ python3 app.py
 - honor_ch: 選擇尊稱-晚輩
 - honor_ch_list: 回復晚輩中可提供查詢的列表
 - fsm: 畫出fsm圖
+- log: 進入記錄親戚資訊功能
+- log_name: 輸入需記錄的親戚的資訊
+- log_ins_pro: 將親戚資訊存入資料庫
+- log_select: 選擇查詢的方法
+- log_sel: 根據上一層選擇的方法（名字或稱呼）提供查詢内容
+- log_sel_pro: 處理查詢要求
+- log_sel_all_pro: 列出所有資料庫所含有的資料
+- log_update: 選擇更新資料的指定方法
+- log_upd: 輸入需更新資料的指定内容
+- log_upd_col: 輸入需更新資料的更新欄位（名字或稱呼）
+- log_upd_key: 輸入需更新資料的更新内容
+- log_upd_pro: 處理更新要求
+- log_delete: 選擇欲刪除資料的指定方法
+- log_del: 輸入欲刪除資料的指定内容
+- log_del_pro: 處理刪除指令
+- log_del_all_pro: 刪除資料庫中所有的資料
 
 ## Deploy in Heroku
 Setting to deploy webhooks on Heroku.
