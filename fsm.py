@@ -4,7 +4,7 @@ from utils import send_text_message,send_button_message,send_image_message
 
 from relative import relative_name,honor_list_exist,honor_list_info,honor_info,list_info
 
-from dblocal import *
+from db import *
 
 from linebot.models import MessageTemplateAction
 

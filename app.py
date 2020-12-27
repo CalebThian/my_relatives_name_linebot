@@ -9,7 +9,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
-from dblocal import db_init,create_table
+from db import db_init,create_table
 import pygraphviz
 import psycopg2
 
